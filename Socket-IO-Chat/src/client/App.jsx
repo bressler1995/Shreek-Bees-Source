@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import Bar from "./components/Bar.jsx";
+import Bar from "./components/Bar/Bar.jsx";
 
 function App() {
 
