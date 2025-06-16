@@ -1,19 +1,17 @@
-var express = require('express');
-// Create the app
-var app = express();
+import express from 'express';
+import { Server } from "socket.io";
 
+const app = express()
+const io = new Server(server);
+let r_storage = [];
+let mx = [];
+let my = [];
+let r_len = 1;
 
-//storage
-var r_storage = [];
-var mx = [];
-var my = [];
-var r_len = 1;
-
-var server = app.listen(process.env.PORT || 3000, listen);
+const server = app.listen(process.env.PORT || 3000, listen);
 
 app.use(express.static('public'));
 
-var io = require('socket.io')(server);
 
 io.sockets.on('connection',
 // We are given a websocket object in our function
@@ -44,7 +42,7 @@ function (socket) {
 
 // This call back just tells us that the server has started
 function listen() {
-  var host = server.address().address;
-  var port = server.address().port;
+  const host = server.address().address;
+  const port = server.address().port;
   console.log('Example app listening at http://' + host + ':' + port);
 }

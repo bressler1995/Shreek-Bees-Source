@@ -9,8 +9,7 @@
   "author": "Brian Ressler",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.2",
-    "onoff": "^1.1.8",
-    "socket.io": "^2.0.4"
+    "express": "^4.21.2",
+    "socket.io": "^2.5.1"
   }
 }
