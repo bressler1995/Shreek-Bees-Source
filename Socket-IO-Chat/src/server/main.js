@@ -10,6 +10,38 @@ const keyPath = 'privkey.pem';
 const mode = "development";
 const app = express();
 
+// Create a WebSocket server
+const wss = new WebSocketServer({ port: 5000 }); // You can choose a different port
+
+// Store chat messages in memory
+const messages = [];
+
+wss.on('connection', ws => {
+  console.log('Client connected');
+
+  // Send all previous messages to the new client
+  messages.forEach(msg => {
+    ws.send(msg);
+  });
+
+  ws.on('message', message => {
+    console.log(`Received message: ${message}`);
+    // Store the message
+    messages.push(message.toString());
+    // Broadcast to all connected clients
+    wss.clients.forEach(client => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(message);
+      }
+    });
+  });
+
+  ws.on('close', () => {
+    console.log('Client disconnected');
+  });
+
+});
+
 try {
   ViteExpress.config({
     mode: mode
@@ -28,36 +60,12 @@ try {
   process.exit(1);
 }
 
-app.get("/hello", (req, res) => {
-  res.send("Hello Vite + React!");
-});
-
 if(mode == "production") {
-  const server = https.createServer(httpsOptions, app);
-  const wss = new WebSocketServer({ server, path: "/ws" });
-
-  wss.on('connection', (ws) => {
-    console.log('WebSocket client connected (production)');
-    ws.on('message', (message) => {
-      console.log('Received:', message.toString());
-      ws.send('Echo: ' + message);
-    });
-  });
-
-  server.listen(3000, () => {
+  https.createServer(httpsOptions, app).listen(3000, () => {
     console.log('Production listening on port 3000...');
   });
-} else if(mode == "development") {
-  const server = ViteExpress.listen(app, 3000, () => {
+} else {
+  ViteExpress.listen(app, 3000, () => {
     console.log('Dev listening on port 3000...');
-  });
-  const wss = new WebSocketServer({ server, path: "/ws" });
-
-  wss.on('connection', (ws) => {
-    console.log('WebSocket client connected (dev)');
-    ws.on('message', (message) => {
-      console.log('Received:', message.toString());
-      ws.send('Echo: ' + message);
-    });
   });
 }
