@@ -9,9 +9,11 @@
     "build": "vite build"
   },
   "dependencies": {
+    "@fontsource/roboto": "^5.2.6",
+    "@mui/icons-material": "^7.1.1",
     "express": "^5.1.0",
-    "react-dom": "^19.1.0",
     "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "vite-express": "*"
   },
   "devDependencies": {
