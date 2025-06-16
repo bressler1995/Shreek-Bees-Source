@@ -57,8 +57,7 @@ function App() {
       {messages.map((message, index) => (
           <li key={index}>{message.toString()}</li>
       ))}
-      <Bar />
-      <button onClick={() => {sendMessage("Hello")}}>Send</button>
+      <Bar handleSend={sendMessage}/>
     </div>
   );
 }

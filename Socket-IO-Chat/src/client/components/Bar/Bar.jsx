@@ -2,12 +2,12 @@ import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-function Bar() {
+function Bar({handleSend}) {
     return ( 
     <div className='app-bar'>
         <FormControl>
             <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-            <Button variant="contained">Contained</Button>
+            <Button onClick={() => {handleSend("Message")}} variant="contained">Contained</Button>
         </FormControl>
     </div>);
 }
