@@ -1,23 +1,29 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, use } from "react";
 import "./App.css";
 import Bar from "./components/Bar/Bar.jsx";
 import io from 'socket.io-client';
 
 function App() {
+  const [initialized, setInitialized] = useState(false);
   const [messages, setMessages] = useState([]);
   const socketRef = useRef(null);
+
+  if(initialized == false) {
+    setInitialized(true);
+    const socket = io();
+    console.log("Socket initialized");
+  }
 
   const sendMessage = (message) => {
     
   };
 
-  const socket = io();
+  
 
   return (
     <div className="App">
-      {/* Canvas */}
       {messages.map((message, index) => (
-          <li key={index}>{message.toString()}</li>
+          <li key={index}>{}</li>
       ))}
       <Bar handleSend={sendMessage}/>
     </div>

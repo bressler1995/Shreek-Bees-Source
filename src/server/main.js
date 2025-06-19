@@ -48,9 +48,17 @@ if(mode == "production") {
     console.log('Dev listening on port 3000...');
   });
 
-  const io = new Server(server);
+  const io = new Server(server, {
+    cors: {
+      origin: "http://localhost:3000"
+    }
+  });
 
   io.on('connection', (socket) => {
-    console.log('A user connected');
+    console.log(socket.id + ' has connected.');
+
+    socket.on('disconnect', () => {
+      console.log('user disconnected');
+    });
   });
 }
