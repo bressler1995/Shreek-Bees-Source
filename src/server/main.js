@@ -20,10 +20,10 @@ const initializeSocketServer = (io) => {
 
     socket.on('disconnect', () => {
       console.log('user disconnected');
+    });
 
-      socket.on('message', (message) => {
+    socket.on('message', (message) => {
         console.log('Received: ' + message);
-      });
     });
   });
 }
