@@ -7,15 +7,20 @@ function App() {
   const [initialized, setInitialized] = useState(false);
   const [messages, setMessages] = useState([]);
   const socketRef = useRef(null);
+  let outterSocket;
 
   if(initialized == false) {
     setInitialized(true);
     const socket = io();
     console.log("Socket initialized");
+
+    socket.emit('message', JSON.stringify({message: 'Message from the client'}));
   }
 
-  const sendMessage = (message) => {
-    socket.emit('message', JSON.stringify({message: message}));
+  const sendMessage = (element) => {
+    if(element != null && element.length == 1) {
+      console.log(element[0].value);
+    }
   };
 
   return (

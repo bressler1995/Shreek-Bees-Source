@@ -22,7 +22,7 @@ const initializeSocketServer = (io) => {
       console.log('user disconnected');
 
       socket.on('message', (message) => {
-        console.log('Received: ' + message.message);
+        console.log('Received: ' + message);
       });
     });
   });
