@@ -3,6 +3,7 @@ import "./App.css";
 import Bar from "./components/Bar/Bar.jsx";
 import io from 'socket.io-client';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { lime, purple } from '@mui/material/colors';
 
 const socket = io();
 console.log("Socket initialized");
@@ -19,35 +20,9 @@ function App() {
           fontWeight: 700,
         }
       },
-      components: {
-        MuiButton: {
-          defaultProps: {
-            size: 'medium'
-          }
-        },
-        MuiTextField: {
-          defaultProps: {
-            size: 'small'
-          }
-        },
-      },
       palette: {
         mode: 'dark',
-        primary: {
-          main: '#d83e00',
-          light: '#e54100',
-          dark: '#FFF',
-          contrastText: '#FFF',
-        },
-        secondary: {
-          main: '#0d425f',
-          light: '#0f4b6b',
-          dark: '#0a3045',
-          contrastText: '#FFF',
-        },
-        accent: {
-          main: '#1e8806',
-        }
+        primary: lime
       },
     });
 
