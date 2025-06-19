@@ -1,7 +1,10 @@
 import express from "express";
 import ViteExpress from "vite-express";
+import http from 'http';
 import https from 'https';
 import fs from 'fs';
+import { Server } from 'socket.io';
+import { createServer } from 'node:http';
 
 let httpsOptions;
 const certPath = 'fullchain.pem';
@@ -30,11 +33,24 @@ try {
 }
 
 if(mode == "production") {
-  https.createServer(httpsOptions, app).listen(3000, () => {
+  const server = https.createServer(httpsOptions, app);
+  server.listen(3000, () => {
     console.log('Production listening on port 3000...');
   });
-} else {
-  ViteExpress.listen(app, 3000, () => {
+
+  const io = new Server(server);
+
+  io.on('connection', (socket) => {
+    console.log('A user connected');
+  });
+} else if(mode == "development") {
+  const server = ViteExpress.listen(app, 3000, () => {
     console.log('Dev listening on port 3000...');
+  });
+
+  const io = new Server(server);
+
+  io.on('connection', (socket) => {
+    console.log('A user connected');
   });
 }
