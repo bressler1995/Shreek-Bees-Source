@@ -15,10 +15,8 @@ function App() {
   }
 
   const sendMessage = (message) => {
-    
+    socket.emit('message', JSON.stringify({message: message}));
   };
-
-  
 
   return (
     <div className="App">

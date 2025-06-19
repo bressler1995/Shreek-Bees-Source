@@ -14,6 +14,20 @@ const app = express();
 
 const messages = [];
 
+const initializeSocketServer = (io) => {
+  io.on('connection', (socket) => {
+    console.log(socket.id + ' has connected.');
+
+    socket.on('disconnect', () => {
+      console.log('user disconnected');
+
+      socket.on('message', (message) => {
+        console.log('Received: ' + message.message);
+      });
+    });
+  });
+}
+
 try {
   ViteExpress.config({
     mode: mode
@@ -38,11 +52,13 @@ if(mode == "production") {
     console.log('Production listening on port 3000...');
   });
 
-  const io = new Server(server);
-
-  io.on('connection', (socket) => {
-    console.log('A user connected');
+  const io = new Server(server, {
+    cors: {
+      origin: "https://example.com"
+    }
   });
+
+  initializeSocketServer(io);
 } else if(mode == "development") {
   const server = ViteExpress.listen(app, 3000, () => {
     console.log('Dev listening on port 3000...');
@@ -54,11 +70,5 @@ if(mode == "production") {
     }
   });
 
-  io.on('connection', (socket) => {
-    console.log(socket.id + ' has connected.');
-
-    socket.on('disconnect', () => {
-      console.log('user disconnected');
-    });
-  });
+  initializeSocketServer(io);
 }
