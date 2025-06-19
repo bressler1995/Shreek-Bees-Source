@@ -9,6 +9,15 @@ console.log("Socket initialized");
 function App() {
   const [messages, setMessages] = useState([]);
   const socketRef = useRef(null);
+  const [initialized, setInitialized] = useState(false);
+
+  if(initialized == false) {
+    setInitialized(true);
+
+    socket.on('message', (message) => {
+      console.log(message);
+    });
+  }
 
   const sendMessage = (element) => {
     if(element != null && element.length == 1) {
@@ -17,7 +26,7 @@ function App() {
       if(elementValue == '') {
         alert("You message cannot be blank. Please enter a message.");
       } else {
-        socket.emit('message', JSON.stringify({message: 'Message from the client'}));
+        socket.emit('message', JSON.stringify({message: elementValue}));
       }
     }
   };

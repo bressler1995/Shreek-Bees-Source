@@ -4,7 +4,6 @@ import http from 'http';
 import https from 'https';
 import fs from 'fs';
 import { Server } from 'socket.io';
-import { createServer } from 'node:http';
 
 let httpsOptions;
 const certPath = 'fullchain.pem';
@@ -14,16 +13,33 @@ const app = express();
 
 const messages = [];
 
-const initializeSocketServer = (io) => {
+const initializeSocketServer = (server) => {
+
+  const io = new Server(server, {
+    cors: {
+      origin: "http://localhost:3000"
+    }
+  });
+  console.log(io)
   io.on('connection', (socket) => {
     console.log(socket.id + ' has connected.');
+
+    if(messages != null && messages.length > 0) {
+      for(let i = 0; i < messages.length; i++) {
+        const currentMessage = messages[i];
+        io.emit('receiveall', currentMessage);
+      }
+    }
 
     socket.on('disconnect', () => {
       console.log('user disconnected');
     });
 
     socket.on('message', (message) => {
-        console.log('Received: ' + message);
+        const payload = {message: JSON.parse(message), sid: socket.id}
+        console.log(payload);
+        messages.push(payload);
+        io.emit('message', payload);
     });
   });
 }
@@ -52,23 +68,11 @@ if(mode == "production") {
     console.log('Production listening on port 3000...');
   });
 
-  const io = new Server(server, {
-    cors: {
-      origin: "https://example.com"
-    }
-  });
-
-  initializeSocketServer(io);
+  initializeSocketServer(server);
 } else if(mode == "development") {
   const server = ViteExpress.listen(app, 3000, () => {
     console.log('Dev listening on port 3000...');
   });
 
-  const io = new Server(server, {
-    cors: {
-      origin: "http://localhost:3000"
-    }
-  });
-
-  initializeSocketServer(io);
+  initializeSocketServer(server);
 }
