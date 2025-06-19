@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 
 function Bar({handleSend}) {
     const inputRef = useRef(null);
+    
     return ( 
     <div className='app-bar'>
         <FormControl>

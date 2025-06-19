@@ -19,7 +19,13 @@ function App() {
 
   const sendMessage = (element) => {
     if(element != null && element.length == 1) {
-      console.log(element[0].value);
+      let elementValue = element[0].value;
+
+      if(elementValue == '') {
+        alert("You message cannot be blank. Please enter a message.");
+      } else {
+        console.log(elementValue);
+      }
     }
   };
 
