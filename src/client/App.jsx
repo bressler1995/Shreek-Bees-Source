@@ -7,7 +7,8 @@ const socket = io();
 console.log("Socket initialized");
 
 function App() {
-  const [messages, setMessages] = useState([]);
+  const initialMessages = [];
+  const [messages, setMessages] = useState(initialMessages);
   const socketRef = useRef(null);
   const [initialized, setInitialized] = useState(false);
 
@@ -15,18 +16,33 @@ function App() {
     setInitialized(true);
 
     socket.on('message', (message) => {
-      console.log(message);
+      const parsedMessage = JSON.parse(message);
+      console.log("Received:" + message);
+      handleMessages(parsedMessage);
+    });
+    
+    socket.on('all', (message) => {
+      const parsedMessage = JSON.parse(message);
+      console.log("Received:" + message);
+      handleMessages(parsedMessage);
     });
   }
 
-  const sendMessage = (element) => {
+  const handleMessages = (messageParam) => {
+    setMessages(prevMessages => [...prevMessages, messageParam]);
+  }
+
+  const handleSend = (element) => {
     if(element != null && element.length == 1) {
       let elementValue = element[0].value;
 
       if(elementValue == '') {
         alert("You message cannot be blank. Please enter a message.");
       } else {
-        socket.emit('message', JSON.stringify({message: elementValue}));
+        const parsedPayload = {text: elementValue, sid: socket.id};
+        const payload = JSON.stringify(parsedPayload);
+        handleMessages(parsedPayload);
+        socket.emit('message', payload);
       }
     }
   };
@@ -34,9 +50,9 @@ function App() {
   return (
     <div className="App">
       {messages.map((message, index) => (
-          <li key={index}>{}</li>
+          <li>{message.text}</li>
       ))}
-      <Bar handleSend={sendMessage}/>
+      <Bar handleSend={handleSend}/>
     </div>
   );
 }

@@ -26,8 +26,8 @@ const initializeSocketServer = (server) => {
 
     if(messages != null && messages.length > 0) {
       for(let i = 0; i < messages.length; i++) {
-        const currentMessage = messages[i];
-        io.emit('receiveall', currentMessage);
+        const payload = messages[i];
+        io.to(socket.id).emit('all', JSON.stringify(payload));
       }
     }
 
@@ -35,11 +35,12 @@ const initializeSocketServer = (server) => {
       console.log('user disconnected');
     });
 
-    socket.on('message', (message) => {
-        const payload = {message: JSON.parse(message), sid: socket.id}
-        console.log(payload);
-        messages.push(payload);
-        io.emit('message', payload);
+    socket.on('message', (payload) => {
+      const parsedPayload = JSON.parse(payload);
+      console.log(parsedPayload);
+      messages.push(parsedPayload);
+      console.log('Emitting message to other clients');
+      socket.broadcast.emit('message', payload);
     });
   });
 }
