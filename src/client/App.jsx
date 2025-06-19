@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, use } from "react";
 import "./App.css";
 import Bar from "./components/Bar/Bar.jsx";
 import io from 'socket.io-client';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const socket = io();
 console.log("Socket initialized");
@@ -11,6 +12,44 @@ function App() {
   const [messages, setMessages] = useState(initialMessages);
   const socketRef = useRef(null);
   const [initialized, setInitialized] = useState(false);
+
+  const theme = createTheme({
+      typography: {
+        h3: {
+          fontWeight: 700,
+        }
+      },
+      components: {
+        MuiButton: {
+          defaultProps: {
+            size: 'medium'
+          }
+        },
+        MuiTextField: {
+          defaultProps: {
+            size: 'small'
+          }
+        },
+      },
+      palette: {
+        mode: 'dark',
+        primary: {
+          main: '#d83e00',
+          light: '#e54100',
+          dark: '#FFF',
+          contrastText: '#FFF',
+        },
+        secondary: {
+          main: '#0d425f',
+          light: '#0f4b6b',
+          dark: '#0a3045',
+          contrastText: '#FFF',
+        },
+        accent: {
+          main: '#1e8806',
+        }
+      },
+    });
 
   if(initialized == false) {
     setInitialized(true);
@@ -48,12 +87,14 @@ function App() {
   };
 
   return (
-    <div className="App">
-      {messages.map((message, index) => (
-          <li>{message.text}</li>
-      ))}
-      <Bar handleSend={handleSend}/>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        {messages.map((message, index) => (
+            <li>{message.text}</li>
+        ))}
+        <Bar handleSend={handleSend}/>
+      </div>
+    </ThemeProvider>
   );
 }
 

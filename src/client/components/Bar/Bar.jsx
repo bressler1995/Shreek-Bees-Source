@@ -3,6 +3,7 @@ import './Bar.css';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 
 function Bar({handleSend}) {
     const inputRef = useRef(null);
@@ -14,12 +15,12 @@ function Bar({handleSend}) {
     }
 
     return ( 
-    <div className='app-bar'>
-        <FormControl>
-            <TextField ref={inputRef} id="outlined-basic" label="Outlined" variant="outlined" />
-            <Button onClick={() => { emitMessage()}} variant="contained">Contained</Button>
+    <Box className='app-bar'>
+        <FormControl className='app-form'>
+            <Box className="app-input" sx={{ p: 2 }}><TextField className='app-input-control' ref={inputRef} id="outlined-basic" label="Outlined" variant="outlined" /></Box>
+            <Box className="app-options" sx={{ p: 2 }}><Button className='app-options-send-opt' onClick={() => { emitMessage()}} variant="contained">Contained</Button></Box>
         </FormControl>
-    </div>);
+    </Box>);
 }
 
 export default Bar;

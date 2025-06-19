@@ -1,1 +1,34 @@
-/* Style Will Go Here */
+.app-bar {
+    display: block;
+    background-color: #111;
+    width: 100%;
+}
+
+.app-bar .app-form {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.app-bar .app-form .app-input {
+    display: block;
+    width: calc(100% - 200px);
+    box-sizing: border-box;
+}
+
+.app-bar .app-form .app-input-control {
+    width: 100%;
+}
+
+.app-bar .app-form .app-options {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+    width: 200px;
+    box-sizing: border-box;
+}
+
+.app-bar .app-form .app-options  .app-options-send-opt {
+    width: 100%;
+}
