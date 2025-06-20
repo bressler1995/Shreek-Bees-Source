@@ -1,12 +1,15 @@
 import { useState, useEffect, useRef, use } from "react";
 import "./App.css";
-import Bar from "./components/Bar/Bar.jsx";
 import io from 'socket.io-client';
+import Bar from "./components/Bar/Bar.jsx";
+import Canvas from "./components/Canvas/Canvas.jsx";
+import UI from "./components/UI/UI.jsx";
+
+// MUI
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { lime, purple } from '@mui/material/colors';
+import { purple } from '@mui/material/colors';
 
 const socket = io();
-console.log("Socket initialized");
 
 function App() {
   const initialMessages = [];
@@ -15,6 +18,14 @@ function App() {
   const [initialized, setInitialized] = useState(false);
 
   const theme = createTheme({
+      breakpoints: {
+        values: {
+          xs: 0,
+          sm: 320,
+          md: 768,
+          lg: 1025
+        },
+      },
       typography: {
         h3: {
           fontWeight: 700,
@@ -22,8 +33,8 @@ function App() {
       },
       palette: {
         mode: 'dark',
-        primary: lime
-      },
+        primary: purple
+      }
     });
 
   if(initialized == false) {
@@ -63,12 +74,14 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
-        {messages.map((message, index) => (
-            <li>{message.text}</li>
-        ))}
+      <UI>
+        <Canvas>
+          {messages.map((message, index) => (
+              <li>{message.text}</li>
+          ))}
+        </Canvas>
         <Bar handleSend={handleSend}/>
-      </div>
+      </UI>
     </ThemeProvider>
   );
 }

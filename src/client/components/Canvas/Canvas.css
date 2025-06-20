@@ -1,1 +1,5 @@
-/* Style Will Go Here */
+.app-canvas {
+    display: block;
+    width: 100%;
+    height: calc(100% - 100px);
+}
