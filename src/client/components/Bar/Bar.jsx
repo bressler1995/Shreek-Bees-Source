@@ -17,8 +17,8 @@ function Bar({handleSend}) {
     return ( 
     <Box className='app-bar'>
         <FormControl className='app-form'>
-            <Box className="app-input" sx={{ pl: 2, pr: 1 }}><TextField className='app-input-control' ref={inputRef} id="outlined-basic" label="Type a Message" color="primary" variant="outlined" /></Box>
-            <Box className="app-options" sx={{ pl: 1, pr: 2 }}><Button className='app-options-send-opt' onClick={() => { emitMessage()}} color="primary" variant="contained">Send</Button></Box>
+            <Box sx={{pr: {xs: '0px', sm: '0px', md: '16px'}, pb: {xs: '8px', sm: '8px', md: '0px'}}} className="app-input"><TextField className='app-input-control' ref={inputRef} id="outlined-basic" label="Type a Message" color="primary" variant="outlined" /></Box>
+            <Box className="app-options"><Button className='app-options-send-opt' onClick={() => { emitMessage()}} color="primary" variant="contained">Send</Button></Box>
         </FormControl>
     </Box>);
 }

@@ -3,24 +3,23 @@
     position: relative;
     background-color: #222;
     width: 100%;
-    height: 100px;
+    box-sizing: border-box;
 }
 
 .app-bar .app-form {
     display: flex;
     position: absolute;
-    flex-flow: row wrap;
-    align-items: center;
-    justify-content: flex-start;
     width: 100%;
     height: 100%;
     top: 0;
     bottom: 0;
+    box-sizing: border-box;
+    padding-left: 16px;
+    padding-right: 16px;
 }
 
 .app-bar .app-form .app-input {
     display: block;
-    width: calc(100% - 200px);
     box-sizing: border-box;
 }
 
@@ -32,10 +31,49 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-end;
-    width: 200px;
     box-sizing: border-box;
 }
 
 .app-bar .app-form .app-options  .app-options-send-opt {
     width: 100%;
+}
+
+@media(max-width: 767.9px) {
+    .app-bar {
+        height: 150px;
+    }
+
+    .app-bar .app-form {
+        flex-flow: column wrap;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+    .app-bar .app-form .app-input {
+        width: 100%
+    }
+
+    .app-bar .app-form .app-options {
+        width: 100%;
+    }
+}
+
+@media(min-width: 768px) {
+    .app-bar {
+        height: 100px;
+    }
+
+    .app-bar .app-form {
+        flex-flow: row wrap;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .app-bar .app-form .app-input {
+        width: calc(100% - 200px);
+    }
+
+    .app-bar .app-form .app-options {
+        width: 200px;
+    }
 }
