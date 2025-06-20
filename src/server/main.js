@@ -20,7 +20,7 @@ const initializeSocketServer = (server) => {
       origin: "http://localhost:3000"
     }
   });
-  console.log(io)
+  // console.log(io)
   io.on('connection', (socket) => {
     console.log(socket.id + ' has connected.');
 
