@@ -57,6 +57,12 @@ function App() {
     setMessages(prevMessages => [...prevMessages, messageParam]);
   }
 
+  const getRand = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
   const handleSend = (element) => {
     if(element != null && element.length == 1) {
       let elementValue = element[0].value;
@@ -64,7 +70,7 @@ function App() {
       if(elementValue == '') {
         alert("You message cannot be blank. Please enter a message.");
       } else {
-        const parsedPayload = {text: elementValue, sid: socket.id};
+        const parsedPayload = {text: elementValue, sid: socket.id, x: getRand(0, 500), y: getRand(0, 500)};
         const payload = JSON.stringify(parsedPayload);
         handleMessages(parsedPayload);
         socket.emit('message', payload);
@@ -75,11 +81,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <UI>
-        <Canvas>
-          {messages.map((message, index) => (
-              <li>{message.text}</li>
-          ))}
-        </Canvas>
+        <Canvas setMessages={setMessages} messages={messages}/>
         <Bar handleSend={handleSend}/>
       </UI>
     </ThemeProvider>

@@ -2,13 +2,13 @@
 import { useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
 
-function Message({ sid, text, initialX, initialY }) {
+function Message({ messageIndex, sid, text, initialX, initialY }) {
   const {
     attributes,
     listeners,
     setNodeRef,
     transform, // This transform represents the current drag offset
-  } = useDraggable({ id: sid }); // Use sid as the dnd-kit 'id'
+  } = useDraggable({ id: messageIndex }); // Use sid as the dnd-kit 'id'
 
   // Apply initial position and the current drag transform.
   // The 'transform' from useDraggable provides the delta during the drag.
