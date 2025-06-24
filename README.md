@@ -1,0 +1,1 @@
+Socket.IO server and client implementation written in React.  A more detailed readme file will come soon.
