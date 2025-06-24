@@ -1,34 +1,16 @@
 {
-  "name": "socket-io-chat",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "name": "shrek_receiver",
+  "version": "1.0.0",
+  "description": "Quietly grabs data from aws and allows for printing on raspberry pi",
+  "main": "server.js",
   "scripts": {
-    "dev": "nodemon src/server/main.js -w src/server",
-    "start": "NODE_ENV=production node src/server/main.js",
-    "build": "vite build"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "author": "Brian Ressler",
+  "license": "ISC",
   "dependencies": {
-    "@dnd-kit/core": "^6.3.1",
-    "@dnd-kit/sortable": "^10.0.0",
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
-    "@fontsource/roboto": "^5.2.6",
-    "@mui/icons-material": "^7.1.1",
-    "@mui/material": "^7.1.1",
-    "express": "^5.1.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-use-websocket": "^3.0.0",
-    "socket.io": "^4.8.1",
-    "socket.io-client": "^4.8.1",
-    "vite-express": "*"
-  },
-  "devDependencies": {
-    "@types/react": "^19.1.2",
-    "@types/react-dom": "^19.1.2",
-    "@vitejs/plugin-react": "^4.4.1",
-    "nodemon": "^3.1.10",
-    "vite": "^6.3.3"
+    "express": "^4.16.2",
+    "onoff": "^1.1.8",
+    "socket.io": "^2.0.4"
   }
 }
